@@ -1,5 +1,3 @@
-import { update } from "./core.js"
-
 const fxEl = document.getElementById('fxEl')
 const scdEl = document.getElementById('scdEl')
 const opcEl = document.getElementById('opcEl')
@@ -18,7 +16,7 @@ let controlsLocal = {} //"model"
 const prevText = 'Note: changes will only be updated next time you refresh and convert!'
 
 function init() {
-    chrome.storage.sync.get(["controls"], ({ controls }) => {
+    browser.storage.sync.get(["controls"], ({ controls }) => {
         controlsLocal = controls
         bindArrEl.forEach((el, i) => {
             bindInput(controls, el, bindArrObj[i], i)
@@ -32,7 +30,7 @@ function bindInput(controls, el, key, i) {
         el.checked = controls[bindArrObj[i]]
         el.addEventListener('input', () => {
             controlsLocal[key] = el.checked
-            chrome.storage.sync.set({ controls: controlsLocal }, function () {
+            browser.storage.sync.set({ controls: controlsLocal }, function () {
                 updatePreview()
             })
         })
@@ -41,16 +39,18 @@ function bindInput(controls, el, key, i) {
     el.value = controls[bindArrObj[i]]
     el.addEventListener('input', () => {
         controlsLocal[key] = el.value
-        chrome.storage.sync.set({ controls: controlsLocal }, function () {
+        browser.storage.sync.set({ controls: controlsLocal }, function () {
             updatePreview()
         })
     })
 }
-chrome.runtime.onInstalled.addListener(
-    init()
+
+browser.runtime.onInstalled.addListener(
+    init
 )
-chrome.runtime.onStartup.addListener(
-    init()
+
+browser.runtime.onStartup.addListener(
+    init
 )
 
 runEl.addEventListener("click", update)
@@ -66,8 +66,7 @@ function updatePreview() {
         }
         const fxPerc = parseInt(controlsLocal.fixation) / parseInt(fxEl.max)
         const fixPoint = Math.ceil(fxPerc * el.length)
-        const newStr = `<span class="notbr-fixation">${el.slice(0, fixPoint)}</span>${el.slice(fixPoint)}`
-        inputArray[i] = newStr
+        inputArray[i] = `<span class="notbr-fixation">${el.slice(0, fixPoint)}</span>${el.slice(fixPoint)}`
         let initReduce = ''
         const sumReduce = inputArray.reduce(
             (prev, curr) => prev + curr + ' ',

@@ -51,8 +51,7 @@ input {
 
 .preview {
     width: 100%;
-    padding: 1rem;
-    padding-top: 0rem;
+    padding: 0 1rem 1rem;
     word-wrap: break-word;
     word-break: break-word;
 }

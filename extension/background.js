@@ -1,5 +1,3 @@
-import { update } from "./core.js"
-
 let controls = {
     fixation: 5,
     saccade: 10,
@@ -10,21 +8,21 @@ let controls = {
     auto: false
 }
 
-chrome.runtime.onInstalled.addListener(() => {
-    chrome.storage.sync.set({ controls })
-    chrome.contextMenus.create({
+browser.runtime.onInstalled.addListener(() => {
+    browser.storage.sync.set({ controls })
+    browser.contextMenus.create({
         id: "notBR",
         title: "Convert this page",
     })
 })
 
-chrome.contextMenus.onClicked.addListener(update)
+browser.contextMenus.onClicked.addListener(update)
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (changeInfo.status != 'complete') {
         return
     }
-    chrome.storage.sync.get("controls", ({ controls }) => {
+    browser.storage.sync.get("controls", ({ controls }) => {
         if (controls.auto) {
             console.log('notBR: autorun')
             update()
