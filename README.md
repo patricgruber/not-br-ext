@@ -1,6 +1,7 @@
 # Not-br (Firefox) Extension
 ✨This is a fork that ports the extension [not-BR](https://github.com/axoletl/not-br/) to the Firefox browser.  
 The extension is still in an **early stage!** 
+
 For testing you can temporarily load the extension:
 1. Clone this repository
 2. In Firefox, go to `about:debugging`
@@ -9,6 +10,8 @@ For testing you can temporarily load the extension:
 5. Click on "Load Temporary Add-On"
 6. Select the `manifest.json` file in the `extension` directory
   
+Installation via file is currently in preparation
+ 
 <br />
 
 💽To use the extension:
